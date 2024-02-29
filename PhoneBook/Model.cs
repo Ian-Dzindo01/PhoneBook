@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
+namespace PhoneBook;
+
 public class Contact
 {
     public int Id { get; set; }
