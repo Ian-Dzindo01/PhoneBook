@@ -20,27 +20,21 @@ class InputHelper
             case "1":
                 Controller.Create();
                 break;
-            case "2":
-                Console.WriteLine("Id of contact you would like to update: ");
-                int id = int.Parse(Console.ReadLine());
-                Controller.Update(id);
-                break;
+            // case "2":
+                // IMPLEMENT HERE
             case "3":
-                Games.GamePrep();
+                Console.WriteLine("Id of contact you would like to update: ");
+                int id1 = int.Parse(Console.ReadLine());
+                Controller.Update(id1);
                 break;
             case "4":
-                Games.ShowSessionTables();
-                break;
-            case "5":
-                Card.ShowCards();
-                break;
-            case "6":
-                Stack.ReadInFromCsv(ConfigurationManager.AppSettings["stackCsv"]);
-                Card.ReadInFromCsv(ConfigurationManager.AppSettings["cardCsv"]);
+                Console.WriteLine("Id of contact you would like to delete: ");
+                int id2 = int.Parse(Console.ReadLine());
+                Controller.Delete(id2);
                 break;
             default:
                 Console.WriteLine("\nInvalid Command. Please type a number from 0 to 4.\n");
                 break;
         }
-
     }
+}

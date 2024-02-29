@@ -5,18 +5,22 @@ namespace PhoneBook
 {
     public class Controller
     {   
-        private static ContactContext db;
+        private static ContactContext db = new ContactContext();
 
         public static void Init()
         {
-            var db = new ContactContext();
             // Note: This sample requires the database to be created before running.
             Console.WriteLine($"Database path: {db.DbPath}.");
         }
 
-        // Create. ADD VALIDITY CHECKING HERE.
+        // ADD VALIDITY CHECKING HERE.
         public static void Create()
         {   
+            if (db == null)
+            {
+                Console.WriteLine("Database context is not initialized.");
+                return;
+            }
             string name, email, number;
 
             Console.WriteLine("Please input contact data in this order - Name, Email, Number");
@@ -24,11 +28,12 @@ namespace PhoneBook
             email = Console.ReadLine();
             number = Console.ReadLine();
 
-            Console.WriteLine("Inserting a new contact");
-            db.Add(new Contact { Name = name, Email=email, Number=number});
+            Console.WriteLine("Successfully inserted a new contact.");
+            db.Contacts.Add(new Contact{ Name = name, Email=email, Number=number});
             db.SaveChanges();
+
         }
-        // Read
+        // FINISH THIS.
         public static Contact Read()
         {
             Console.WriteLine("Querying for a contact");
@@ -39,21 +44,37 @@ namespace PhoneBook
         // Update. SUPPORT FOR UPDATE TO ALL PROPERTIES.
         public static void Update(int id)
         {   
+            // Fetch contact from id here
+            var contact = db.Contacts.Find(id);
+
+            if (contact == null)
+            {
+                Console.WriteLine($"Contact with ID {id} not found.");
+                Controller.Update(id);
+            }
+
             Console.WriteLine("New number for this contact: ");
             string number = Console.ReadLine();
 
-            Console.WriteLine("Updating the contact number");
             contact.Number = number;
             db.SaveChanges();
+            Console.WriteLine("Contact successfully updated.");
+            InputHelper.GetUserInput();
         }
 
-        // Delete
-        public static void Delete(Contact contact)
-        {
-            Console.WriteLine("Delete a contact");
+        public static void Delete(int id)
+        {   
+            var contact = db.Contacts.Find(id);
+
+            if (contact == null)
+            {
+                Console.WriteLine($"Contact with ID {id} not found.");
+                Controller.Delete(id);
+            }
             db.Remove(contact);
             db.SaveChanges();
             Console.WriteLine("Contact successfully deleted. \n");
+            InputHelper.GetUserInput();
         }
     }
 }
