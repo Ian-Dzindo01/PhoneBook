@@ -7,22 +7,20 @@ using var db = new ContactContext();
 Console.WriteLine($"Database path: {db.DbPath}.");
 
 // Create
-Console.WriteLine("Inserting a new blog");
+Console.WriteLine("Inserting a new contact");
 db.Add(new Contact { Name = "Ian", Email="ian.dzindo01@gmail.com", Number="061227556"});
 db.SaveChanges();
 
 // Read
-// Console.WriteLine("Querying for a blog");
-// var blog = db.Blogs.OrderBy(b => b.BlogId).First();
+Console.WriteLine("Querying for a contact");
+var contact = db.Contacts.OrderBy(b => b.Id).First();
 
 // Update
-// Console.WriteLine("Updating the blog and adding a post");
-// blog.Url = "https://devblogs.microsoft.com/dotnet";
-// blog.Posts.Add(
-//     new Post { Title = "Hello World", Content = "I wrote an app using EF Core!" });
-// db.SaveChanges();
+Console.WriteLine("Updating a contact");
+contact.Number = "061147154";
+db.SaveChanges();
 
 // Delete
-// Console.WriteLine("Delete the blog");
-// db.Remove(blog);
-// db.SaveChanges();
+Console.WriteLine("Delete a contact");
+db.Remove(contact);
+db.SaveChanges();

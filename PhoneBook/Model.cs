@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-
-
-
 public class Contact
 {
     public int Id { get; set; }
