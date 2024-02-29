@@ -1,12 +1,9 @@
-using System;
-using System.Linq;
-
 namespace PhoneBook
 {
     public class Controller
     {   
         private static ContactContext db = new ContactContext();
-        // ADD VALIDITY CHECKING HERE.
+        
         public static void Create()
         {   
             if (db == null)
@@ -18,15 +15,35 @@ namespace PhoneBook
 
             Console.WriteLine("Please input contact data in this order - Name, Email, Number");
             name = Console.ReadLine();
+
+            if(name.Length > 35)
+            {
+                Console.WriteLine("Name exceeds 35 character limit.\n Please try again.");
+                Controller.Create();
+
+            }
+
             email = Console.ReadLine();
+
+            if (!Controller.IsValidEmail(email))
+            {
+                Console.WriteLine("Email format incorrect. Please try again.");
+                Controller.Create();
+            }
+
             number = Console.ReadLine();
+
+            if(number.Length != 9 || number.All(char.IsDigit))
+            {
+                Console.WriteLine("Incorrect number format. Please try again.");
+                Controller.Create();
+            }
 
             Console.WriteLine("Successfully inserted a new contact.");
             db.Contacts.Add(new Contact{ Name = name, Email=email, Number=number});
             db.SaveChanges();
 
         }
-        // FINISH THIS.
         public static void Show()
         {   
             Console.WriteLine("Id of contact you wish to see: ");            
@@ -72,6 +89,23 @@ namespace PhoneBook
             db.SaveChanges();
             Console.WriteLine("Contact successfully deleted. \n");
             InputHelper.GetUserInput();
+        }
+        static bool IsValidEmail(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith(".")) {
+                return false;
+            }
+
+            try {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+
+            catch {
+                return false;
+            }
         }
     }
 }
