@@ -3,7 +3,7 @@ namespace PhoneBook
     public class Controller
     {   
         private static ContactContext db = new ContactContext();
-        
+
         public static void Create()
         {   
             if (db == null)
@@ -20,7 +20,6 @@ namespace PhoneBook
             {
                 Console.WriteLine("Name exceeds 35 character limit.\n Please try again.");
                 Controller.Create();
-
             }
 
             email = Console.ReadLine();
@@ -93,6 +92,7 @@ namespace PhoneBook
         static bool IsValidEmail(string email)
         {
             var trimmedEmail = email.Trim();
+            Console.WriteLine(trimmedEmail);
 
             if (trimmedEmail.EndsWith(".")) {
                 return false;
