@@ -6,13 +6,6 @@ namespace PhoneBook
     public class Controller
     {   
         private static ContactContext db = new ContactContext();
-
-        public static void Init()
-        {
-            // Note: This sample requires the database to be created before running.
-            Console.WriteLine($"Database path: {db.DbPath}.");
-        }
-
         // ADD VALIDITY CHECKING HERE.
         public static void Create()
         {   
@@ -34,11 +27,15 @@ namespace PhoneBook
 
         }
         // FINISH THIS.
-        public static Contact Read()
-        {
-            Console.WriteLine("Querying for a contact");
+        public static void Show()
+        {   
+            Console.WriteLine("Id of contact you wish to see: ");            
+            int choice = int.Parse(Console.ReadLine());
+            Console.WriteLine("Querying for a contact...");
+
             var contact = db.Contacts.OrderBy(b => b.Id).First();
-            return contact;
+            Console.WriteLine($"Name: {contact.Name} Email: {contact.Email} Number: {contact.Number}");
+            InputHelper.GetUserInput();
         }
 
         // Update. SUPPORT FOR UPDATE TO ALL PROPERTIES.

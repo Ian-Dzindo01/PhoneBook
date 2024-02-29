@@ -12,7 +12,6 @@ class InputHelper
         Console.WriteLine("3: Update Contact Info");
         Console.WriteLine("4: Delete a Contact");
 
-        Controller.Init();
         string? choice = Console.ReadLine();
 
         switch (choice)
@@ -20,8 +19,9 @@ class InputHelper
             case "1":
                 Controller.Create();
                 break;
-            // case "2":
-                // IMPLEMENT HERE
+            case "2":
+                Controller.Show();
+                break;
             case "3":
                 Console.WriteLine("Id of contact you would like to update: ");
                 int id1 = int.Parse(Console.ReadLine());
